@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: Bank Operation Sample API - OpenAPI 3.0
+  description: |-
+    This is a sample Test for getting Bank and Transactions information and do a transaction by a REST Costroller.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+paths:
+  /balance/{accountId}:
+    get:
+      summary: Get User Account Balance
+      description: Get user account blance
+      operationId: getBalance
+      parameters:
+        - name: accountId
+          in: path
+          description: account id of the balance owner
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Balance'          
+        '400':
+          description: Invalid parameter
+        '404':
+          description: Not Found
+  /transactions/{accountId}:
+    get:
+      summary: Get Transacition List
+      description: Get User Transactions List
+      operationId: getTransactionsList
+      parameters:
+        - name: accountId
+          in: path
+          description: account id of the transactions owner
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'          
+        '400':
+          description: Invalid status value
+  /bank-transfert:
+    post:
+      summary: Execute Bank Transfert
+      description: Execute Bank Transfert
+      operationId: updatePet
+      requestBody:
+        description: Bank Transfert Information
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankTransfertInfo'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Account not found
+        '405':
+          description: Validation exception
+components:
+  schemas:
+    Balance:
+      type: object
+      properties:
+        availableBalance:
+          type: integer
+          format: int64
+          example: 99999.99
+        balance:
+          type: integer
+          format: int64
+          example: 99999.99
+    Transaction:
+      type: object
+      properties:
+        transactionId:
+          type: integer
+          format: int64
+          example: 123456
+        amount:
+          type: integer
+          format: int64
+          example: 999.99
+        receiverName:
+          type: string
+        currency:
+          type: string
+          example: EURO
+        accountId:
+          type: integer
+          format: int64
+        executionDate:
+          type: string
+          example: 2020-12-12
+    BankTransfertInfo:
+      type: object
+      properties:
+        accountId:
+          type: integer
+          format: int64
+        receiverName:
+          type: string
+        description:
+          type: string
+          example: bank transfert
+        currency:
+          type: string
+          example: EURO
+        amount:
+          type: integer
+          format: int64
+          example: 999.99
+        executionDate:
+          type: string
+          example: 2020-12-12
