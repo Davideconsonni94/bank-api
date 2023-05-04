@@ -123,4 +123,16 @@ public class BankClient {
         headers.add("X-Time-Zone", timezone);
         return headers;
     }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
+
+    public void setBankHost(String bankHost) {
+        this.bankHost = bankHost;
+    }
+
+    public void setBankApiKey(String bankApiKey) {
+        this.bankApiKey = bankApiKey;
+    }
 }

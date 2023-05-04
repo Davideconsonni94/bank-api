@@ -1,7 +1,7 @@
 # bank-api
 bank api test
 
-run application
+build: mvn clean verify
 
 run: mvn spring-boot:run
 
