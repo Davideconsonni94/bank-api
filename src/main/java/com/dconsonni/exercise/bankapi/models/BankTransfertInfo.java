@@ -3,29 +3,38 @@ package com.dconsonni.exercise.bankapi.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 /**
  * BankTransfertInfo
  */
-@Validated
 public class BankTransfertInfo   {
   @JsonProperty("accountId")
+  @NotNull(message = "The accountId is required.")
   private Long accountId = null;
 
   @JsonProperty("receiverName")
+  @NotBlank(message = "The receiverName is required.")
   private String receiverName = null;
 
   @JsonProperty("description")
+  @NotBlank(message = "The description is required.")
   private String description = null;
 
   @JsonProperty("currency")
+  @NotBlank(message = "The currency is required.")
   private String currency = null;
 
   @JsonProperty("amount")
-  private Long amount = null;
+  @NotBlank(message = "The amount is required.")
+  private String amount = null;
 
   @JsonProperty("executionDate")
+  @NotBlank(message = "The executionDate is required.")
+  @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])[-.](0[1-9]|1[012])[-.](19|20)\\d\\d$", flags = { Pattern.Flag.CASE_INSENSITIVE, Pattern.Flag.MULTILINE }, message = "The executionDate is invalid.")
   private String executionDate = null;
 
   public BankTransfertInfo accountId(Long accountId) {
@@ -96,7 +105,7 @@ public class BankTransfertInfo   {
     this.currency = currency;
   }
 
-  public BankTransfertInfo amount(Long amount) {
+  public BankTransfertInfo amount(String amount) {
     this.amount = amount;
     return this;
   }
@@ -105,11 +114,11 @@ public class BankTransfertInfo   {
    * Get amount
    * @return amount
    **/
-    public Long getAmount() {
+    public String getAmount() {
     return amount;
   }
 
-  public void setAmount(Long amount) {
+  public void setAmount(String amount) {
     this.amount = amount;
   }
 

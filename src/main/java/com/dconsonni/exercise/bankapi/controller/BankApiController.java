@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,8 @@ public class BankApiController {
     Logger log = LoggerFactory.getLogger(BankApiController.class);
 
     @RequestMapping(method = RequestMethod.GET, value = "/balance/{accountId}")
-    ResponseEntity<Balance> getBalance(@PathVariable("accountId") Long accountId) {
+    ResponseEntity<Balance> getBalance(
+            @PathVariable(value = "accountId", required = true) Long accountId) {
         log.debug("Start getBalance operation");
         Balance result = null;
         try {
@@ -38,7 +40,10 @@ public class BankApiController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/transactions/{accountId}")
-    ResponseEntity<List<Transaction>>  getTransactions(@PathVariable("accountId") Long accountId, @RequestParam("from") String from, @RequestParam("to") String to) {
+    ResponseEntity<List<Transaction>>  getTransactions(
+            @PathVariable(value="accountId", required = true) Long accountId,
+            @RequestParam(value="from", required = true) String from,
+            @RequestParam(value="to", required = true) String to) {
         log.debug("Start getTransactions operation");
         List<Transaction> result= null;
         try{
@@ -52,7 +57,8 @@ public class BankApiController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/bank-transfer")
-    ResponseEntity<MoneyTransfertResponse> executeBankTransfer(@RequestBody BankTransfertInfo bankTransfertInfo) {
+    ResponseEntity<MoneyTransfertResponse> executeBankTransfer(
+            @Valid @RequestBody BankTransfertInfo bankTransfertInfo) {
         log.debug("Start executeBankTransfer operation");
         MoneyTransfertResponse result= null;
         try {
