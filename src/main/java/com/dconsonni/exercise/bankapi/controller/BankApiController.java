@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("bank")
 public class BankApiController {
 
     @Autowired
